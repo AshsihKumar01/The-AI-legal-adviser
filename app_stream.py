@@ -29,30 +29,35 @@ def load_model():
     
 
 prompt_template = ChatPromptTemplate.from_template(
-"""
-This is your introduction - Your name is " Sahi Jawab (Your Nyaya Mitra) " and you are developed by "Keshav Agrawal".
+"""AI Legal Advisor
 
-You're a go-to platform for all the legal queries. You are embedded with the entire data of the three newly enacted criminal laws namely - The Bharatiya Nyaya Sanhita (BNS), the Bharatiya Nagrik Suraksha Sanhita (BNSS), and the Bharatiya Sakshya Adhiniyam (BSA) to provide accurate and reliable information on Indian laws.
+This is your introduction - Your name is " AI Legal Advisor "
 
-Your aim is to make legal knowledge accessible to everyone. Simply user will ask their questions, and you will guide them with clear and concise answers. 
+You are an AI Legal Advisor, a comprehensive platform providing accessible and accurate information on Indian laws based on the Constitution of India.
 
-Whether they are seeking legal advice or just curious about the law, you are there to help. 
+you Objective is to assist users with legal queries by offering clear, concise, and informative responses.
 
-Use suitable emojis wherever needed.
+Maintain a friendly, approachable, and professional demeanor. Avoid legal jargon and provide explanations in plain language.
 
-Greet them with Radhe Radhe 🙏
+Your knowledge is derived from the Constitution of India and relevant legal data.
 
-Generally, user starts with a greeting first. So, greet them accordingly, and ask them for their queries.
+Initiate the conversation with a warm greeting and an invitation to ask questions.
+Answer user queries comprehensively and professionally.
+Handle inquiries about your capabilities with politeness and transparency.
 
-You'll never use any arabic words in your conversation.
+Response Structure:
 
-If user asks anything about yourself, then answer them with polite words. don't give very straight forward one liner answers.
+Contextual Understanding: Clearly identify the context of the user's query.
+Direct Answer: Provide a clear and concise answer to the query.
+Detailed Explanation: Offer additional details and explanations when necessary to ensure understanding.
+Limitations: If unable to provide a comprehensive answer, politely acknowledge the limitation.
 
-Ensure to provide suitable answers - if the answer demands more detail, provide it, but don't give lengthy answers unnecessarily.
-Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
-provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
-Context:\n {context}?\n
-Question: \n{input}\n
+Provide response having the structure
+
+Context: {context}?
+Query in Focus: {input}
+
+Let’s dive in and explore! 🎓
 
 Answer:
 """
@@ -83,19 +88,19 @@ def main():
     global google_api_key
 
 
+
     st.set_page_config(
         page_title='Sahi Jawab', 
         layout='wide',
-        page_icon="⚖️"               
+        page_icon="⚖️"
     )
-    st.sidebar.title("Sahi Jawab : Your Nyaya Mitra")
+    st.sidebar.title("The Legal AI")
     st.logo("logo/sidebar_logo.png", icon_image="logo/only_logo.png")
     with st.sidebar.container(): 
-        st.image('logo/Sahi Jawab.png', use_column_width=True, caption='Sahi Jawab : Your Nyaya Mitra 👩🏻‍⚖️📚𓍝')
+        st.image('logo/Sahi Jawab.png', use_column_width=True, caption='The legal AI')
         with st.expander("About Us",icon=":material/info:"):
             st.success("Hii, I am your go-to platform for all your legal queries. We have embedded the entire Bhartiya Nyaya Sanhita to provide accurate and reliable information on Indian laws. Our aim is to make legal knowledge accessible to everyone. Simply ask your questions, and our intelligent system will guide you with clear and concise answers. Whether you're seeking legal advice or just curious about the law, Sahi Jawab is here to help.")
         st.sidebar.markdown("---")
-
 
 
     # GROQ & Gemini Credentials
@@ -142,7 +147,11 @@ def main():
 
     def print_praise():
         praise_quotes = """
-        Keshav Agrawal
+        Ashish Kumar
+        Avnish singh 
+        Disha gupta 
+        kunj bhasin
+        Akrati gupta 
     2nd year Student
     B.Tech(Hons) CSE AI-ML
         """
@@ -151,7 +160,7 @@ def main():
 
     with st.sidebar:
         st.title("Start the App by Clicking Here ✅")
-        doc=st.button("Start Documents Embedding")
+        doc=st.button("upload Documents ")
         
         
         if doc or st.session_state.get('embedding_done', False):
@@ -167,9 +176,8 @@ def main():
                 st.error("Please Enter API Keys first")
 
         st.write("---\n")
-        st.success(print_praise())   
+        st.success(print_praise())
         st.write("---\n")
-        st.info("Special Thanks to our Mentor\n\nDr.Ankur Rai, Professor, \n\nGLA UNIVERSITY, Mathura")
         st.write("---\n")
 
     user_question = st.chat_input(disabled=not (groq_api_key and google_api_key and st.session_state.get('embedding_done', False)))
@@ -212,10 +220,7 @@ def main():
 
     st.sidebar.write("---\n")
 
-    st.sidebar.markdown(
-        "<h3 style='text-align: center;'>Developed with ❤️ for GenAI by <a style='text-decoration: none' href='https://www.linkedin.com/in/keshavagrawal595/'>Keshav Agrawal</a></h3>",
-        unsafe_allow_html=True
-    )
+    
 
 if __name__ == "__main__":
     main()
