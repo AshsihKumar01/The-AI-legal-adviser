@@ -87,8 +87,41 @@ def main():
     global groq_api_key
     global google_api_key
 
+    if 'theme' not in st.session_state:  
+       st.session_state.theme = 'light'  
 
-
+     
+    def toggle_theme():  
+        if st.session_state.theme == 'light':  
+            st.session_state.theme = 'dark'  
+        else:  
+            st.session_state.theme = 'light'  
+    
+     
+    button_label = "Switch to Dark Theme" if st.session_state.theme == 'light' else "Switch to Light Theme"  
+    st.button(button_label, on_click=toggle_theme)  
+    
+     
+    if st.session_state.theme == 'light':  
+        st.markdown("""  
+            <style>  
+            .appview-container {  
+                background-color: #ffffff;  
+                color: #000000;  
+            }  
+            </style>  
+        """, unsafe_allow_html=True)  
+    else:  
+        st.markdown("""  
+            <style>  
+            .appview-container {  
+                background-color: #000000;  
+                color: #ffffff;  
+            }  
+            </style>  
+        """, unsafe_allow_html=True)  
+    
+    
     st.set_page_config(
         page_title='Sahi Jawab', 
         layout='wide',
