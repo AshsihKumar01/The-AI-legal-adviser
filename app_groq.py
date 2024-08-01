@@ -83,6 +83,47 @@ def main():
             st.success("Hii, I am your go-to platform for all your legal queries. We have embedded the entire Bhartiya Nyaya Sanhita to provide accurate and reliable information on Indian laws. Our aim is to make legal knowledge accessible to everyone. Simply ask your questions, and our intelligent system will guide you with clear and concise answers. Whether you're seeking legal advice or just curious about the law, Sahi Jawab is here to help.")
         st.sidebar.markdown("---")
 
+
+    if 'theme' not in st.session_state:  
+        st.session_state.theme = 'light'  
+    
+     
+    def toggle_theme():  
+        if st.session_state.theme == 'light':  
+            st.session_state.theme = 'dark'  
+        else:  
+            st.session_state.theme = 'light'  
+    
+     
+    button_label = "Switch to Dark Theme" if st.session_state.theme == 'light' else "Switch to Light Theme"  
+    st.button(button_label, on_click=toggle_theme)  
+    
+     
+    if st.session_state.theme == 'light':  
+        st.markdown("""  
+            <style>  
+            .appview-container {  
+                background-color: #ffffff;  
+                color: #000000;  
+            }  
+            </style>  
+        """, unsafe_allow_html=True)  
+    else:  
+        st.markdown("""  
+            <style>  
+            .appview-container {  
+                background-color: #000000;  
+                color: #ffffff;  
+            }  
+            </style>  
+        """, unsafe_allow_html=True)  
+    
+     
+    st.title("Toggle Theme Example")  
+    st.write("This is an example of a toggle button to switch between light and dark themes.")
+
+
+    
     # Store LLM generated responses
     if "messages" not in st.session_state.keys():
         st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
