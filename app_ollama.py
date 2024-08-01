@@ -21,8 +21,6 @@ load_dotenv()
 os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-import streamlit as st  
-
 
 if 'theme' not in st.session_state:  
     st.session_state.theme = 'light'  
