@@ -22,44 +22,6 @@ os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
-if 'theme' not in st.session_state:  
-    st.session_state.theme = 'light'  
-
- 
-def toggle_theme():  
-    if st.session_state.theme == 'light':  
-        st.session_state.theme = 'dark'  
-    else:  
-        st.session_state.theme = 'light'  
-
- 
-button_label = "Switch to Dark Theme" if st.session_state.theme == 'light' else "Switch to Light Theme"  
-st.button(button_label, on_click=toggle_theme)  
-
- 
-if st.session_state.theme == 'light':  
-    st.markdown("""  
-        <style>  
-        .appview-container {  
-            background-color: #ffffff;  
-            color: #000000;  
-        }  
-        </style>  
-    """, unsafe_allow_html=True)  
-else:  
-    st.markdown("""  
-        <style>  
-        .appview-container {  
-            background-color: #000000;  
-            color: #ffffff;  
-        }  
-        </style>  
-    """, unsafe_allow_html=True)  
-
- 
-st.title("Toggle Theme Example")  
-st.write("This is an example of a toggle button to switch between light and dark themes.")
-
 
 def get_pdf_text():
     text=""
