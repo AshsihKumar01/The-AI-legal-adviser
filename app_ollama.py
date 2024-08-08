@@ -124,16 +124,14 @@ def user_input(user_question):
 def main():
     
     st.set_page_config(
-        page_title='Sahi Jawab', 
+        page_title='The legal AI', 
         layout='wide',
-        page_icon="⚖️"               
+        page_icon="🎗"               
     )
 
-    # st.header("Sahi Jawab : Your Nyaya Mitra 👩🏻‍⚖️📚𓍝🏛️")
 
     st.sidebar.title("Sahi Jawab : Your Nyaya Mitra")
 
-    # st.image("Sahi Jawab.png", use_column_width=True,caption='Sahi Jawab')
 
     # Page Setup 
     #Image In Sidebar 
@@ -143,9 +141,9 @@ def main():
     st.logo("sidebar_logo.png", icon_image="only_logo.png")
     
     with st.sidebar.container(): 
-        st.image('Sahi Jawab.png', use_column_width=True, caption='Sahi Jawab : Your Nyaya Mitra 👩🏻‍⚖️📚𓍝')
+        st.image('legal ai logo .jpg', use_column_width=True, caption='The Legal AI 🎗')
         with st.expander("About Us",icon=":material/info:"):
-            st.success("Hii, I am your go-to platform for all your legal queries. We have embedded the entire Bhartiya Nyaya Sanhita to provide accurate and reliable information on Indian laws. Our aim is to make legal knowledge accessible to everyone. Simply ask your questions, and our intelligent system will guide you with clear and concise answers. Whether you're seeking legal advice or just curious about the law, Sahi Jawab is here to help.")
+            st.success("Hello! Welcome to your ultimate platform for all legal queries. We've integrated Article 363A of the Constitution of India to offer precise and reliable information on Indian laws. Our mission is to make legal knowledge accessible to everyone. Just ask your questions, and our intelligent system will provide clear and concise answers. Whether you're seeking legal advice or simply curious about the law, The Legal AI is here to assist you..")
         st.sidebar.markdown("---")
 
     # Store LLM generated responses
@@ -165,7 +163,12 @@ def main():
 
     def print_praise():
         praise_quotes = """
-        Keshav Agrawal
+    Ashish Kumar
+    Avnish singh
+    Disha gupta
+    kunj bhasin
+    Akrati gupta 
+
     2nd year Student
     B.Tech(Hons) CSE AI-ML
         """
@@ -176,8 +179,6 @@ def main():
     # user_question = st.text_input("Ask your Question :",label_visibility="collapsed")
     # user_question = st.chat_input()
     # ask=st.button("Let the Magic Begin !! ")
-
-    
 
     if user_question := st.chat_input():
         st.session_state.messages.append({"role": "user", "content": user_question})

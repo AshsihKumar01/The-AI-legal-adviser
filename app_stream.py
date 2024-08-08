@@ -63,69 +63,69 @@ def get_vector_store(progress):
         st.session_state.embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
         progress.progress(10)
 
-        st.session_state.loader = PyPDFDirectoryLoader("./bns")
-        st.session_state.docs = st.session_state.loader.load()
-        progress.progress(30)
+        st.session_state.loader = PyPDFDirectoryLoader("./COI") 
+        st.session_state.docs = st.session_state.loader.load() 
+        progress.progress(30) 
 
-        st.session_state.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-        st.session_state.final_documents = st.session_state.text_splitter.split_documents(st.session_state.docs)
-        progress.progress(60)
+        st.session_state.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200) 
+        st.session_state.final_documents = st.session_state.text_splitter.split_documents(st.session_state.docs)  
+        progress.progress(60) 
 
-        st.session_state.vectors = FAISS.from_documents(st.session_state.final_documents, st.session_state.embeddings)
-        progress.progress(100)
+        st.session_state.vectors = FAISS.from_documents(st.session_state.final_documents, st.session_state.embeddings) 
+        progress.progress(100) 
 
-def main():
+def main(): 
     global model
     global groq_api_key
     global google_api_key
 
-    st.set_page_config(
-        page_title='Sahi Jawab',
+    st.set_page_config( 
+        page_title='The legal AI ',
         layout='wide',
         page_icon="🎗"
-    )
-    st.sidebar.title("The Legal AI")
-    st.sidebar.image('logo/legal ai logo .jpg', use_column_width=True, caption='The Legal AI')
+    ) 
+    st.sidebar.title("The Legal AI") 
+    st.sidebar.image('logo/legal ai logo .jpg', use_column_width=True, caption='The Legal AI 🎗') 
   
     # Theme toggle handling``
     if 'theme' not in st.session_state:
         st.session_state.theme = 'light'
 
     def toggle_theme():
-        if st.session_state.theme == 'light':
-            st.session_state.theme = 'dark'
-        else:
-            st.session_state.theme = 'light'
-
-    button_label = "Switch to Dark Theme" if st.session_state.theme == 'light' else "Switch to Light Theme"
-    st.button(button_label, on_click=toggle_theme)
-
-    if st.session_state.theme == 'light':
-        st.markdown("""
-            <style>
-            .appview-container {
-                background-color: #ffffff;
-                color: #000000;
-            }
-            .css-1d391kg, .css-10trblm, .css-1oe6wy4 {
-                color: #000000;
-            }
-            </style>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown("""
-            <style>
-            .appview-container {
-                background-color: #000000;
-                color: #ffffff;
-            }
-            .css-1d391kg, .css-10trblm, .css-1oe6wy4 {
-                color: #ffffff;
-            }
-            </style>
-        """, unsafe_allow_html=True)
+        if st.session_state.theme == 'dark':  
+            st.session_state.theme = 'light'  
+        else:  
+            st.session_state.theme = 'dark'  
 
 
+    button_label = "Switch to Light Theme" if st.session_state.theme == 'dark' else "Switch to Dark Theme"  
+    st.button(button_label, on_click=toggle_theme)  
+
+
+    if st.session_state.theme == 'dark':  
+        st.markdown("""  
+            <style>  
+            .appview-container {  
+                background-color: #000000;  
+            }  
+            .appview-container .chat-message, .output-container {  
+                color: #ffffff !important;  
+                background-color: #333333;  /* dark gray */
+            }  
+            </style>  
+        """, unsafe_allow_html=True)  
+    else:  
+        st.markdown("""  
+            <style>  
+            .appview-container {  
+                background-color: #60caf7;  /* light gray */
+            }  
+            .appview-container .chat-message, .output-container {  
+                color: #333333 !important;  /* dark gray */
+                background-color: #f0f0f0;  /* light gray */
+            }  
+            </style>  
+        """, unsafe_allow_html=True) 
     
     if groq_api_key and google_api_key:
         load_model()

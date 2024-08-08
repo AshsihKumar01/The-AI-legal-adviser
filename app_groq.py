@@ -62,7 +62,7 @@ def get_vector_store():
     if "vectors" not in st.session_state:
 
         st.session_state.embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
-        st.session_state.loader=PyPDFDirectoryLoader("./bns") ## Data Ingestion
+        st.session_state.loader=PyPDFDirectoryLoader("./COI") ## Data Ingestion
         st.session_state.docs=st.session_state.loader.load() ## Document Loading
         st.session_state.text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,chunk_overlap=200) ## Chunk Creation
         st.session_state.final_documents=st.session_state.text_splitter.split_documents(st.session_state.docs) #splitting
@@ -71,16 +71,16 @@ def get_vector_store():
 def main():
 
     st.set_page_config(
-        page_title='Sahi Jawab', 
+        page_title='The legal AI', 
         layout='wide',
-        page_icon="⚖️"               
+        page_icon="The Legal 🎗"               
     )
-    st.sidebar.title("Sahi Jawab : Your Nyaya Mitra")
+    st.sidebar.title("The legal AI ")
     st.logo("logo\sidebar_logo.png", icon_image="logo\only_logo.png")
     with st.sidebar.container(): 
-        st.image('logo\Sahi Jawab.png', use_column_width=True, caption='Sahi Jawab : Your Nyaya Mitra 👩🏻‍⚖️📚𓍝')
+        st.image('logo\legal ai logo .jpg', use_column_width=True, caption='The Legal AI 🎗')
         with st.expander("About Us",icon=":material/info:"):
-            st.success("Hii, I am your go-to platform for all your legal queries. We have embedded the entire Bhartiya Nyaya Sanhita to provide accurate and reliable information on Indian laws. Our aim is to make legal knowledge accessible to everyone. Simply ask your questions, and our intelligent system will guide you with clear and concise answers. Whether you're seeking legal advice or just curious about the law, Sahi Jawab is here to help.")
+            st.success("Hello! Welcome to your ultimate platform for all legal queries. We've integrated Article 363A of the Constitution of India to offer precise and reliable information on Indian laws. Our mission is to make legal knowledge accessible to everyone. Just ask your questions, and our intelligent system will provide clear and concise answers. Whether you're seeking legal advice or simply curious about the law, The Legal AI is here to assist you..")
         st.sidebar.markdown("---")
 
     # Store LLM generated responses
@@ -97,11 +97,11 @@ def main():
 
     def print_praise():
         praise_quotes = """
-        Ashish Kumar
-        Avnish singh 
-        Disha gupta 
-        kunj bhasin
-            
+    Ashish Kumar
+    Avnish singh
+    Disha gupta
+    kunj bhasin
+    Akrati gupta 
 
     2nd year Student
     B.Tech(Hons) CSE AI-ML
@@ -122,7 +122,7 @@ def main():
                 st.success("Ask Questions now...")
 
         st.sidebar.write("---\n")
-        st.sidebar.success(print_praise())   
+        st.sidebar.success(print_praise())
         st.sidebar.write("---\n")
         st.sidebar.info("Special Thanks to our Mentor\n\nDr.Ankur Rai, Professor, \n\nGLA UNIVERSITY, Mathura")
         st.sidebar.write("---\n")
