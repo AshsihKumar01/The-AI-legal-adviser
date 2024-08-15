@@ -21,12 +21,12 @@ google_api_key = os.getenv('GOOGLE_API_KEY')
 def load_model():
     global model
     genai.configure(api_key=google_api_key)
-    model = ChatGroq(groq_api_key=groq_api_key, model_name="Llama3-70b-8192")
+    model = ChatGroq(groq_api_key=groq_api_key, model_name="Llama3-70b-8192" ,temperature= 0.5)
 
 prompt_template = ChatPromptTemplate.from_template(
 """AI Legal Advisor
 
-This is your introduction - Your name is "AI Legal Advisor".
+This is your introduction - Your name is "AI Legal Advisor".7
 
 You are an AI Legal Advisor, a comprehensive platform providing accessible and accurate information on Indian laws based on the Constitution of India.
 
@@ -92,7 +92,7 @@ def main():
         st.session_state.theme = 'light'
 
     def toggle_theme():
-        if st.session_state.theme == 'dark':  
+        if st.session_state.theme == 'dark':
             st.session_state.theme = 'light'  
         else:  
             st.session_state.theme = 'dark'  
@@ -102,7 +102,7 @@ def main():
     st.button(button_label, on_click=toggle_theme)  
 
 
-    if st.session_state.theme == 'dark':  
+    if st.session_state.theme == 'dark':
         st.markdown("""  
             <style>  
             .appview-container {  
@@ -113,7 +113,7 @@ def main():
                 background-color: #333333;  /* dark gray */
             }  
             </style>  
-        """, unsafe_allow_html=True)  
+        """, unsafe_allow_html=True)
     else:  
         st.markdown("""  
             <style>  
@@ -143,10 +143,9 @@ def main():
 
     def clear_chat_history():
         st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-
     def print_praise():
         praise_quotes = """
-        Ashish Kumar
+            Ashish Kumar
         Avnish Singh 
         Disha Gupta 
         Kunj Bhasin
@@ -156,25 +155,17 @@ def main():
         """
         title = "**Developed By -**\n"
         return title + praise_quotes
+   
+    if google_api_key and groq_api_key:
+        with st.spinner("Getting redy for you ... "):
+            progress_bar = st.progress(0)
+            get_vector_store(progress_bar)
+            st.success("Chat is unlocked. You can ask Questions now...")
+            st.session_state.embedding_done = True
+    else:
+        st.error("Please Enter API Keys first")
 
-    with st.sidebar:
-        st.title("Start the App by Clicking Here ✅")
-        doc = st.button("Upload Documents")
-        
-        if doc or st.session_state.get('embedding_done', False):
-            if google_api_key and groq_api_key:
-                with st.spinner("Processing..."):
-                    progress_bar = st.progress(0)
-                    get_vector_store(progress_bar)
-                    st.info("VectorDB Store is Ready")
-                    st.success("You're good to go!!")
-                    st.success("Ask questions now...")
-                    st.session_state.embedding_done = True
-            else:
-                st.error("Please enter API keys first")
-
-        st.write("---\n")       
-
+    
     user_question = st.chat_input(disabled=not (groq_api_key and google_api_key and st.session_state.get('embedding_done', False)))
     
     if user_question:

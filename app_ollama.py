@@ -25,7 +25,7 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 def get_pdf_text():
     text=""
-    pdf_reader= PdfReader("Bharatiya_Nyaya_Sanhita_2023.pdf")
+    pdf_reader= PdfReader("COI.pdf")
     for page in pdf_reader.pages:
         text+= page.extract_text()
     return text
