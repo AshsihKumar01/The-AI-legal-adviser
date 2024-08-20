@@ -6,13 +6,11 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
-# from langchain_groq import ChatGroq
 from langchain_community.llms import Ollama
 import google.generativeai as genai
 from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.chains import create_retrieval_chain
-from langchain_community.document_loaders import PyPDFDirectoryLoader
-from PIL import Image
+from langchain_community.document_loaders import PyPDFLoader
+
 
 from dotenv import load_dotenv
 
@@ -28,6 +26,13 @@ def get_pdf_text():
     pdf_reader= PdfReader("COI.pdf")
     for page in pdf_reader.pages:
         text+= page.extract_text()
+    return text
+def get_case_text(docs):
+    text = ""
+    for doc in docs:
+        pdf_reader = PdfReader(doc)
+        for page in pdf_reader.pages:
+            text += page.extract_text()
     return text
 
 
@@ -78,11 +83,6 @@ Query in Focus: {input}
 Let’s dive in and explore! 🎓
     Answer:
     """
-
-    # model = ChatGroq(groq_api_key=groq_api_key,
-    #                 model_name="Llama3-8b-8192",
-    #                 temperature=0.7)
-
     model = Ollama(model="llama3")
 
     prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"])
@@ -103,11 +103,6 @@ def user_input(user_question):
 
     response = chain(
         {"input_documents":docs, "question": user_question})
-        # , return_only_outputs=True)
-
-    # st.write(response)
-    # st.write("Reply: ", response["output_text"])
-
     # With a streamlit expander
     with st.expander("Document Similarity Search"):
         # Find the relevant chunks
@@ -117,7 +112,19 @@ def user_input(user_question):
 
     return response["output_text"]
 
-
+def handle_additional_pdf_upload(uploaded_files):
+    if uploaded_files:
+        additional_docs = []
+        for uploaded_file in uploaded_files:
+            st.session_state.loader = PyPDFLoader.from_file(uploaded_file)
+            new_docs = st.session_state.loader.load()
+            additional_docs.extend(new_docs)
+        
+        st.session_state.docs.extend(additional_docs)
+        new_final_documents = st.session_state.text_splitter.split_documents(additional_docs)
+        st.session_state.final_documents.extend(new_final_documents)
+        st.session_state.vectors.add_documents(new_final_documents)
+        st.success("Additional PDFs added successfully!")
 
 
 
@@ -128,16 +135,6 @@ def main():
         layout='wide',
         page_icon="🎗"               
     )
-
-
-    st.sidebar.title("Sahi Jawab : Your Nyaya Mitra")
-
-
-    # Page Setup 
-    #Image In Sidebar 
-
-    # st.logo(sidebar_logo, icon_image=main_body_logo)  format
-
     st.logo("sidebar_logo.png", icon_image="only_logo.png")
     
     with st.sidebar.container(): 
@@ -175,18 +172,10 @@ def main():
         title = "**Developed By -**\n\n"
         return title + praise_quotes
 
-    # st.subheader("Ask your question : ")
-    # user_question = st.text_input("Ask your Question :",label_visibility="collapsed")
-    # user_question = st.chat_input()
-    # ask=st.button("Let the Magic Begin !! ")
-
     if user_question := st.chat_input():
         st.session_state.messages.append({"role": "user", "content": user_question})
         with st.chat_message("user"):
             st.write(user_question)
-        # user_input(user_question)
-
-    # Generate a new response if last message is not from assistant
 
     if st.session_state.messages[-1]["role"] != "assistant":
         with st.chat_message("assistant"):
@@ -202,49 +191,9 @@ def main():
         message = {"role": "assistant", "content": response}
         st.session_state.messages.append(message)
 
-
-
-    with st.sidebar:
-        st.title("Start the App by Clicking Here ✅")
-        if st.button("Start Documents Embedding"):
-            with st.spinner("Processing..."):
-                raw_text = get_pdf_text()
-                text_chunks = get_text_chunks(raw_text)
-                get_vector_store(text_chunks)
-                st.info("VectorDB Store is Ready")
-                st.success("You're good to go !! ")
-                st.success("Ask Questions now...")
-        st.sidebar.write("---\n")
-        st.sidebar.success(print_praise())   
-        st.sidebar.write("---\n")
-        st.sidebar.info("Special Thanks to our Mentor\n\nDr.Ankur Rai, Professor, \n\nGLA UNIVERSITY, Mathura")
-        st.sidebar.write("---\n")
-
-
-    # # Store LLM generated responses
-    # if "messages" not in st.session_state.keys():
-    #     st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-
-
-
     st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 
     st.sidebar.write("---\n")
-
-    
-
-    # if st.session_state.messages[-1]["role"] != "assistant":
-    #     with st.chat_message("assistant"):
-    #         with st.spinner("Thinking..."):
-    #             response = user_input(user_question)
-    #             # placeholder = st.empty()
-    #             # full_response = ''
-    #             # for item in response:
-    #             #     full_response += item
-    #             #     placeholder.markdown(full_response)
-    #             # placeholder.markdown(full_response)
-    #     message = {"role": "assistant", "content": response}
-    #     st.session_state.messages.append(message)
 
 
 if __name__ == "__main__":
