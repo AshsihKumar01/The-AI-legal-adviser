@@ -71,16 +71,16 @@ def get_vector_store():
 def main():
 
     st.set_page_config(
-        page_title='The legal AI', 
+        page_title='Justice Genie', 
         layout='wide',
         page_icon="The Legal 🎗"               
     )
-    st.sidebar.title("The legal AI ")
+    st.sidebar.title("Justice Genie ")
     st.logo("logo\sidebar_logo.png", icon_image="logo\only_logo.png")
     with st.sidebar.container(): 
-        st.image('logo\legal ai logo .jpg', use_column_width=True, caption='The Legal AI 🎗')
+        st.image('logo\legal ai logo .jpg', use_column_width=True, caption='Justice Genie 🎗')
         with st.expander("About Us",icon=":material/info:"):
-            st.success("Hello! Welcome to your ultimate platform for all legal queries. We've integrated Article 363A of the Constitution of India to offer precise and reliable information on Indian laws. Our mission is to make legal knowledge accessible to everyone. Just ask your questions, and our intelligent system will provide clear and concise answers. Whether you're seeking legal advice or simply curious about the law, The Legal AI is here to assist you..")
+            st.success("Hello! Welcome to your ultimate platform for all legal queries. We've integrated Article 363A of the Constitution of India to offer precise and reliable information on Indian laws. Our mission is to make legal knowledge accessible to everyone. Just ask your questions, and our intelligent system will provide clear and concise answers. Whether you're seeking legal advice or simply curious about the law, Justice Genie is here to assist you..")
         st.sidebar.markdown("---")
 
     # Store LLM generated responses
