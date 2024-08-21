@@ -116,13 +116,13 @@ def main():
     global google_api_key
 
     st.set_page_config(
-        page_title='The Legal AI',
+        page_title='Justice Genie',
         layout="wide",
         page_icon="🎗"
     )
     
-    st.sidebar.title("The Legal AI")
-    st.sidebar.image('logo/legal ai logo .jpg', use_column_width=True, caption='The Legal AI 🎗')
+    st.sidebar.title("Justice Genie")
+    st.sidebar.image('logo/legal ai logo .jpg', use_column_width=True, caption='Justice Genie 🎗')
 
     # Initialize session state for the question
     if "question" not in st.session_state:
@@ -262,7 +262,7 @@ def main():
     st.sidebar.markdown(print_praise())
     with st.sidebar.container(): 
         with st.expander("About Us",icon=":material/info:"):
-            st.success("Hello! Welcome to your ultimate platform for all legal queries. We've integrated Article 363A of the Constitution of India to offer precise and reliable information on Indian laws. Our mission is to make legal knowledge accessible to everyone. Just ask your questions, and our intelligent system will provide clear and concise answers. Whether you're seeking legal advice or simply curious about the law, The Legal AI is here to assist you..")
+            st.success("Hello! Welcome to your ultimate platform for all legal queries. We've integrated Article 363A of the Constitution of India to offer precise and reliable information on Indian laws. Our mission is to make legal knowledge accessible to everyone. Just ask your questions, and our intelligent system will provide clear and concise answers. Whether you're seeking legal advice or simply curious about the law, Justice Genie is here to assist you..")
 
 
 if __name__ == "__main__":
