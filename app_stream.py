@@ -12,6 +12,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
 from langchain_community.document_loaders import PyPDFDirectoryLoader, PyPDFLoader
 import tempfile
+import time
 
 load_dotenv()
 
