@@ -6,7 +6,6 @@
 - **PDF Document Analysis**: Users can upload legal documents in PDF format, which the AI analyzes to provide insights and relevant information.
 - **Knowledge Base**: As more documents are uploaded, Justice Genie’s knowledge base expands, enabling the AI to provide increasingly accurate advice.
 - **Question-Answering System**: Users can ask questions related to the uploaded legal documents, and the AI will generate precise answers based on the content.
-- **Dynamic PDF Embedding**: The `embed_pdf_via_iframe` function allows for the embedding of large, externally hosted PDFs (e.g., from Google Drive) directly into the platform.
 
 ## Installation
 
